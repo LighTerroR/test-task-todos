@@ -1,0 +1,19 @@
+//breakpoints
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1680px,
+);
+
+//colors
+$prime: #666699;
+$prime-darken: #444468;
+$second: #fff;
+$danger: #c11414;
+
+@function width($parent-width, $element-width) {
+  @return ($element-width / $parent-width) * 100%;
+}
