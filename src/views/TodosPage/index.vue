@@ -35,9 +35,12 @@
       @save-changes="saveChanges"
       @cancel-changes="cancelChanges"
       @repeat-changes="repeatChanges"
-      @close-note="changeControlModal"
-      @delete-note="changeControlModal"/>
-    <ModalWindow :controlModal="controlModal" />
+      @close-note="openModal"
+      @delete-note="openModal"/>
+    <ModalWindow
+      :showModal="showModal"
+      @on-ok="(deleteElement ? deleteNote : closeWithoutSaving)()"
+      @on-cancel="closeModal" />
   </div>
 </template>
 
@@ -57,11 +60,8 @@ export default {
 
   data() {
     return {
-      controlModal: {
-        show: false,
-        id: 0,
-        delete: false,
-      },
+      showModal: false,
+      deleteElement: false,
       noteId: 0,
       todos: [],
       activeTodo: [],
@@ -113,8 +113,27 @@ export default {
         this.updateTodos();
       }
     },
-    changeControlModal(control) {
-      this.controlModal = control;
+    openModal(data) {
+      this.deleteElement = data.delete;
+      if (this.deleteElement === false && this.changesTodos.length <= 1) {
+        this.$store.commit('clearTodoChanges');
+        this.$router.push('/');
+      } else {
+        this.showModal = data.show;
+      }
+    },
+    deleteNote() {
+      this.$store.commit('deleteNote', this.noteId);
+      localStorage.notes = JSON.stringify(this.$store.state.notes);
+      this.showModal = false;
+      this.$router.push('/');
+    },
+    closeWithoutSaving() {
+      this.$store.commit('clearTodoChanges');
+      this.$router.push('/');
+    },
+    closeModal() {
+      this.showModal = false;
     },
   },
 

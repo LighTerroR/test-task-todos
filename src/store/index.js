@@ -33,14 +33,14 @@ export default createStore({
         state.todoChanges.unshift(todos.slice());
       }
     },
+    clearTodoChanges(state) {
+      state.todoChanges.length = 0;
+    },
   },
   actions: {
   },
   modules: {
   },
   getters: {
-    getNotes(state) {
-      return state.notes;
-    },
   },
 });
