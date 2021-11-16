@@ -79,12 +79,10 @@ export default {
           this.$router.push({ name: 'Todo', params: { id: this.note.id } });
           localStorage.notes = JSON.stringify(this.$store.state.notes);
           this.value = '';
-          this.focus = false;
         } else {
           this.titleElement = this.value;
           this.$emit('create-todo', this.titleElement);
           this.value = '';
-          this.focus = false;
         }
       } else {
         this.isEmpty = true;
@@ -226,6 +224,41 @@ export default {
     max-width: 0.01px;
     transition: max-width 120ms ease;
     visibility: hidden;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .header__form {
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header{
+    &__wrapper {
+      flex-direction: column;
+    }
+    &__form {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .input {
+    width: 90%;
+    margin: 0;
+  }
+
+  .header{
+    &__form {
+      flex-direction: column;
+    }
+
+    &__button {
+      width: 90%;
+    }
   }
 }
 </style>

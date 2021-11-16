@@ -63,6 +63,7 @@ export default {
 .todo-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   margin: 10px;
 
@@ -71,7 +72,7 @@ export default {
     padding-left: 40px;
     display: flex;
     align-items: center;
-    width: 78%;
+    width: 75%;
     line-height: 110%;
 
     &:hover .todo-item__checkbox {
@@ -114,6 +115,40 @@ export default {
     border: none;
     border-bottom: 1px solid $prime;
     color: $prime-darken;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .todo-item__checkbox-wrapper {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .todo-item{
+    &__buttons-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .todo-item {
+    flex-wrap: wrap;
+
+    &__checkbox-wrapper {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+
+    &__label {
+      font-size: 20px;
+    }
+
+    &__buttons-wrapper {
+      flex-direction: row;
+    }
   }
 }
 </style>

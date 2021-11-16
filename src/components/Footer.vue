@@ -57,4 +57,15 @@ export default {
     width: 18%;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .footer__wrapper {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  .footer__button {
+    width: 25%;
+    margin: 5px;
+  }
+}
 </style>

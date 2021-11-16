@@ -101,3 +101,24 @@ p {
 .pb-70 {
   padding-bottom: 70px;
 }
+
+@media screen and (max-width: 768px) {
+  .title-chapter {
+    width: 90%;
+    margin: 0 auto;
+  }
+  ._empty {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .button {
+    padding: 10px 5px;
+    font-size: 13px;
+  }
+
+  .pb-70 {
+    padding-bottom: 120px;
+  }
+}
