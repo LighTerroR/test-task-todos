@@ -1,10 +1,10 @@
 <template>
-  <div class="modal-window" :class="{ 'modal-window--show': openModal }">
+  <div class="modal-window" :class="{ 'modal-window--show': showModal }">
     <div class="modal-window__wrapper">
       <h2 class="modal-window__title">Вы уверенны?</h2>
       <div class="modal-window__buttons-wrapper">
-        <button @click="yes" class="button button__edit modal-window__button">Да</button>
-        <button @click="no" class="button button__delete modal-window__button">Нет</button>
+        <button @click="onOk" class="button button__edit modal-window__button">Да</button>
+        <button @click="onCancel" class="button button__delete modal-window__button">Нет</button>
       </div>
     </div>
   </div>
@@ -12,33 +12,15 @@
 
 <script>
 export default {
-  props: {
-    controlModal: Object,
-  },
-
-  data() {
-    return {
-      openModal: false,
-    };
-  },
+  props: ['showModal'],
 
   methods: {
-    yes() {
-      if (this.controlModal.delete) {
-        this.$store.commit('deleteNote', this.controlModal.id);
-      } else {
-        this.$router('/');
-      }
-      this.openModal = false;
+    onOk() {
+      this.$emit('on-ok', true);
     },
 
-    no() {
-      this.openModal = false;
-    },
-  },
-  watch: {
-    controlModal(e) {
-      this.openModal = e.id;
+    onCancel() {
+      this.$emit('on-cancel', false);
     },
   },
 };

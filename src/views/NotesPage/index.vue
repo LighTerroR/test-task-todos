@@ -1,26 +1,26 @@
 <template>
   <div id='notes'>
-    <Header :page="true" :countNotes="getNotes.length" />
+    <Header :page="true" :countNotes="notes.length" />
     <div class="container">
       <h2 class="title-chapter">
         <span>Заметки</span>
-        <span class="count-elements">{{ getNotes.length }}</span>
+        <span class="count-elements">{{ notes.length }}</span>
       </h2>
       <div class="card-container">
-        <h2 class="_empty" v-if="!getNotes.length">Не создано ни одной заметки</h2>
+        <h2 class="_empty" v-if="!notes.length">Не создано ни одной заметки</h2>
         <Note
-        v-else
-        v-for="note in getNotes"
+        v-for="note in notes"
         :key="note.id"
         :note="note"
-        @getModalControl="getModalControl" />
+        @on-delete="openModal" />
       </div>
     </div>
-    <ModalWindow :controlModal="controlModal"/>
+    <ModalWindow :showModal="showModal" @on-ok="deleteNote" @on-cancel="closeModal"/>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Header from '@/components/Header.vue';
 import Note from '@/components/Note.vue';
 import ModalWindow from '@/components/ModalWindow.vue';
@@ -34,24 +34,32 @@ export default {
 
   data() {
     return {
-      controlModal: {
-        show: false,
-        id: 0,
-        delete: false,
-      },
+      showModal: false,
+      id: 0,
     };
   },
 
   methods: {
-    getModalControl(control) {
-      this.controlModal = control;
+    openModal(data) {
+      this.showModal = data.show;
+      this.id = data.id;
+    },
+    deleteNote() {
+      this.$store.commit('deleteNote', this.id);
+      localStorage.notes = JSON.stringify(this.$store.state.notes);
+      this.showModal = false;
+    },
+    closeModal() {
+      this.showModal = false;
     },
   },
 
-  computed: {
-    getNotes() {
-      return this.$store.getters.getNotes;
-    },
+  computed: mapState(['notes']),
+
+  mounted() {
+    if (localStorage.notes) {
+      this.$store.commit('takeStateFromLocalStorage', JSON.parse(localStorage.notes));
+    }
   },
 };
 </script>

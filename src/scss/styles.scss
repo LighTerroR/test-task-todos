@@ -3,7 +3,7 @@
 @include make_container($breakpoints);
 
 body {
-  width: 100vw;
+  width: 100%;
   font-family: 'Ubuntu', sans-serif;
   font-size: 16px;
   font-weight: normal;
@@ -96,4 +96,8 @@ p {
   font-size: 40px;
   margin-top: 10px;
   text-align: center;
+}
+
+.pb-70 {
+  padding-bottom: 70px;
 }

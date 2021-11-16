@@ -2,11 +2,11 @@
   <div class="footer">
     <div class="container">
       <div class="footer__wrapper">
-        <button class="button button__edit footer__button">Сохранить</button>
-        <button class="button button__edit footer__button">Отменить</button>
-        <button class="button button__edit footer__button">Повторить</button>
-        <button class="button button__delete footer__button">Закрыть</button>
-        <button class="button button__delete footer__button">Удалить</button>
+        <button @click="save" class="button button__edit footer__button">Сохранить</button>
+        <button @click="cancel" class="button button__edit footer__button">Отменить</button>
+        <button @click="repeat" class="button button__edit footer__button">Повторить</button>
+        <button @click="closeNote" class="button button__delete footer__button">Закрыть</button>
+        <button @click="deleteNote" class="button button__delete footer__button">Удалить</button>
       </div>
     </div>
   </div>
@@ -14,8 +14,26 @@
 
 <script>
 export default {
-  setup() {
+  props: ['noteId'],
+  data() {
     return {};
+  },
+  methods: {
+    save() {
+      this.$emit('save-changes');
+    },
+    cancel() {
+      this.$emit('cancel-changes');
+    },
+    repeat() {
+      this.$emit('repeat-changes');
+    },
+    closeNote() {
+      this.$emit('close-note', { show: true, id: this.noteId, delete: false });
+    },
+    deleteNote() {
+      this.$emit('delete-note', { show: true, id: this.noteId, delete: true });
+    },
   },
 };
 </script>
