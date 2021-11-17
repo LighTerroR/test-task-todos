@@ -14,7 +14,7 @@
                   autocomplete="off"
                   @focus="focus = true"
                   @focusout="value === '' ? (focus = false) : (focus = true)"
-                  @keydown.enter="createRecord"
+                  @keydown.enter="checkTypeRecord"
                   :class="{ _focus: focus }"
                   v-model.trim="value"
                 />
@@ -31,7 +31,7 @@
               </div>
             </div>
           </div>
-          <button @click="createRecord" class="button header__button">
+          <button @click="checkTypeRecord" class="button header__button">
             {{ page ? "Создать заметку" : "Создать задачу" }}
           </button>
         </div>
@@ -138,11 +138,6 @@ export default {
     width: 30%;
     color: $second;
     transition: all 0.1s ease-in-out;
-
-    &:hover {
-      border-width: 2px;
-      background-color: rgba(255, 255, 255, 0.2);
-    }
   }
 }
 
@@ -234,6 +229,13 @@ export default {
     max-width: 0.01px;
     transition: max-width 120ms ease;
     visibility: hidden;
+  }
+}
+
+@media (any-hover: hover) {
+  .header__button:hover {
+    border-width: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
   }
 }
 

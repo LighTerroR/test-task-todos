@@ -1,6 +1,6 @@
 <template>
   <div id="todo-list">
-    <Header :title="note.title" @createTodo="createTodo" />
+    <Header :title="note.title" @create-todo="createTodo" />
     <div class="container pb-70">
       <h2 class="title-chapter">
         <span>Активные задачи</span>

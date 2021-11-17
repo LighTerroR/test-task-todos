@@ -82,10 +82,6 @@ export default {
     align-items: center;
     width: 75%;
     line-height: 110%;
-
-    &:hover .todo-item__checkbox {
-      background-color: rgba(68, 68, 104, 0.2);
-    }
   }
 
   &__input:checked + .todo-item__checkbox {
@@ -119,10 +115,16 @@ export default {
     font-weight: 600;
     padding: 10px 10px 10px 5px;
     display: block;
-    width: 500px;
+    width: 100%;
     border: none;
     border-bottom: 1px solid $prime;
     color: $prime-darken;
+  }
+}
+
+@media (any-hover: hover) {
+  .todo-item__checkbox-wrapper:hover .todo-item__checkbox {
+    background-color: rgba(68, 68, 104, 0.2);
   }
 }
 
@@ -146,7 +148,7 @@ export default {
     flex-wrap: wrap;
 
     &__checkbox-wrapper {
-      width: 100%;
+      width: 90%;
       margin-bottom: 5px;
     }
 
