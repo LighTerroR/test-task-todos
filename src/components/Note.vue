@@ -27,10 +27,6 @@ export default {
     },
   },
 
-  data() {
-    return {};
-  },
-
   methods: {
     onDelete() {
       this.$emit('on-delete', { show: true, id: this.note.id });

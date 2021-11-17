@@ -76,6 +76,7 @@ export default {
   },
 
   methods: {
+    // Создаёт элемент списка
     createTodo(noteTitle) {
       this.todos.push({
         id: this.todos.length + 1,
@@ -83,28 +84,33 @@ export default {
         isCompleted: false,
       });
       this.updateTodos();
-      this.$store.commit('updateApplicationState', this.todos);
+      this.updateApplicationState();
     },
+    // изменяет элемент списка в массиве после его редактирования
     changeTodos(todo) {
       this.todos.splice(this.todos.findIndex((item) => item.id === todo.id), 1);
       this.todos.push(todo);
       this.updateTodos();
-      this.$store.commit('updateApplicationState', this.todos);
+      this.updateApplicationState();
     },
+
     deleteItem(id) {
       this.todos.splice(this.todos.findIndex((item) => item.id === id), 1);
       this.updateTodos();
-      this.$store.commit('updateApplicationState', this.todos);
+      this.updateApplicationState();
     },
+    // обновляет списки активных элементов и выполненных элементов
     updateTodos() {
       this.activeTodo = this.todos.filter((item) => item.isCompleted === false);
       this.completedTodo = this.todos.filter((item) => item.isCompleted === true);
     },
+
     saveChanges() {
       this.$store.commit('saveChangesInCurrentNote', { id: this.noteId, todos: this.todos });
       localStorage.notes = JSON.stringify(this.$store.state.notes);
       this.$store.commit('clearApplicationState');
     },
+
     cancelChanges() {
       if (this.numberChange < 9) {
         this.numberChange += 1;
@@ -112,6 +118,7 @@ export default {
         this.updateTodos();
       }
     },
+
     repeatChanges() {
       if (this.numberChange > 0) {
         this.numberChange -= 1;
@@ -119,27 +126,34 @@ export default {
         this.updateTodos();
       }
     },
+
     openModal(data) {
       this.deleteElement = data.delete;
       if (this.deleteElement === false && this.applicationState.length <= 1) {
-        this.$store.commit('clearApplicationState');
-        this.$router.push('/');
+        this.closeWithoutSaving();
       } else {
         this.showModal = data.show;
       }
     },
+
     deleteNote() {
       this.$store.commit('deleteNote', this.noteId);
       localStorage.notes = JSON.stringify(this.$store.state.notes);
       this.showModal = false;
       this.$router.push('/');
     },
+
     closeWithoutSaving() {
       this.$store.commit('clearApplicationState');
       this.$router.push('/');
     },
+
     closeModal() {
       this.showModal = false;
+    },
+
+    updateApplicationState() {
+      this.$store.commit('updateApplicationState', this.todos);
     },
   },
 
@@ -152,8 +166,6 @@ export default {
 
   created() {
     this.noteId = Number(this.$route.params.id);
-    this.todos = this.note.todos.slice();
-    this.updateTodos();
     this.$store.commit('updateApplicationState', this.todos);
     document.addEventListener('beforeunload', this.closeWindow);
   },
@@ -162,6 +174,8 @@ export default {
     if (localStorage.notes) {
       this.$store.commit('takeStateFromLocalStorage', JSON.parse(localStorage.notes));
     }
+    this.todos = this.note.todos.slice();
+    this.updateTodos();
   },
 };
 </script>

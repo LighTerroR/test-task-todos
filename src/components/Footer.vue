@@ -22,15 +22,19 @@ export default {
     save() {
       this.$emit('save-changes');
     },
+
     cancel() {
       this.$emit('cancel-changes');
     },
+
     repeat() {
       this.$emit('repeat-changes');
     },
+
     closeNote() {
       this.$emit('close-note', { show: true, id: this.noteId, delete: false });
     },
+
     deleteNote() {
       this.$emit('delete-note', { show: true, id: this.noteId, delete: true });
     },

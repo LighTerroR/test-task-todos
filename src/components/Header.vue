@@ -69,25 +69,35 @@ export default {
   },
 
   methods: {
-    createRecord() {
+    // Проверяет тип создаваемой записи
+    checkTypeRecord() {
       this.getTitle(this.value);
       if (this.note.title !== '' || this.titleElement !== '') {
         if (this.page) {
-          this.note.id = this.countNotes + 1;
-          this.$store.commit('createNote', this.note);
-          this.note.title = this.value;
-          this.$router.push({ name: 'Todo', params: { id: this.note.id } });
-          localStorage.notes = JSON.stringify(this.$store.state.notes);
-          this.value = '';
+          this.createNote();
         } else {
-          this.titleElement = this.value;
-          this.$emit('create-todo', this.titleElement);
-          this.value = '';
+          this.getTodoTitle();
         }
       } else {
         this.isEmpty = true;
       }
     },
+
+    createNote() {
+      this.note.id = this.countNotes + 1;
+      this.$store.commit('createNote', this.note);
+      this.note.title = this.value;
+      this.$router.push({ name: 'Todo', params: { id: this.note.id } });
+      localStorage.notes = JSON.stringify(this.$store.state.notes);
+      this.value = '';
+    },
+
+    getTodoTitle() {
+      this.titleElement = this.value;
+      this.$emit('create-todo', this.titleElement);
+      this.value = '';
+    },
+
     getTitle(titleElement) {
       if (this.page) this.note.title = titleElement;
       this.titleElement = titleElement;

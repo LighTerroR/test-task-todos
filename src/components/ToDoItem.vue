@@ -41,17 +41,25 @@ export default {
     };
   },
   methods: {
+    // редактирование этемента списка todo
     updateTodo() {
       this.editing = !this.editing;
     },
+
     todoTextChange(e) {
       this.currentTodo.title = e.target.value;
-      this.$emit('update-changes', this.currentTodo);
+      this.updateChanges();
     },
+    // отмечает чекбокс
     doCheck() {
       this.currentTodo.isCompleted = !this.currentTodo.isCompleted;
+      this.updateChanges();
+    },
+
+    updateChanges() {
       this.$emit('update-changes', this.currentTodo);
     },
+
     deleteTodo() {
       this.$emit('delete-todo', this.todo.id);
     },
